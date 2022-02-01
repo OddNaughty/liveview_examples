@@ -1,0 +1,42 @@
+<div class="flex flex-col items-center w-2/3 text-center">
+    <h2 class="bg-cyan-500 w-full font-bold">Classic use</h2>
+    <div class="bg-cyan-100 w-full">
+        <p>Current temperature: <%= @temperature %></p>
+    </div>
+</div>
+
+<div class="flex flex-col items-center w-2/3 text-center">
+    <h2 class="bg-cyan-500 w-full font-bold">Function component use</h2>
+    <.display_temp temperature= {@temperature}/>
+</div>
+
+<div class="flex flex-col items-center w-2/3 text-center">
+    <h2 class="bg-cyan-500 w-full font-bold">Function and slot component use</h2>
+    <.display_temp_slot>
+        <%= @temperature %>
+    </.display_temp_slot>
+</div>
+
+<.presentation_temperature_card temperature={@temperature}>
+    <:title>Try outing the named slots</:title>
+</.presentation_temperature_card>
+
+<.presentation_card>
+    <:title>Try outing some key up events</:title>
+    <input class="bg-slate-900 text-gray-50" phx-keyup="keyup"/>
+    <%= if String.length(@keyup) > 2 do %>
+        <p id="debug_1" phx-hook="Debug"><%= @keyup %></p>
+    <% end %>
+</.presentation_card>
+
+<.presentation_card>
+    <:title>Try outting some events</:title>
+    <button phx-click="inc_temperature" class="mt-2 px-4 py-2 font-semibold text-sm bg-cyan-500 text-white rounded-full shadow-sm">Increase Temperature</button><br/>
+    <button phx-click={JS.push("inc_temperature_slow", loading: "body")} class="mt-2 px-4 py-2 font-semibold text-sm bg-cyan-500 text-white rounded-full shadow-sm">Increase Temperature but slowly</button><br/>
+    <button phx-click={JS.show(to: "#modal", transition: "fade-in-scale")} class="mt-2 px-4 py-2 font-semibold text-sm bg-cyan-500 text-white rounded-full shadow-sm">Show modal</button><br/>
+    <button phx-click={JS.add_class("underline text-4xl", to: "h2")} class="mt-2 px-4 py-2 font-semibold text-sm bg-cyan-500 text-white rounded-full shadow-sm">Add some static class (underline and size)</button><br/>
+    <button phx-click={JS.remove_class("underline text-4xl", to: "h2")} class="mt-2 px-4 py-2 font-semibold text-sm bg-cyan-500 text-white rounded-full shadow-sm">Remove previous classes</button><br>
+    <button phx-click="delayed_event" class="my-2 px-4 py-2 font-semibold text-sm bg-cyan-500 text-white rounded-full shadow-sm">Send a delayed event</button>
+</.presentation_card>
+
+<.modal text="This is my modal"/>
